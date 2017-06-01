@@ -4,6 +4,7 @@
 import sys
 import random
 import six
+import copy
 
 dialogs = []
 dialog = []
@@ -11,8 +12,10 @@ for ln in open(sys.argv[1], 'r').readlines():
     ln = ln.strip()
     if ln != '':
         dialog.append(ln)
+        # partial dialogs are also included
+        if len(dialog)>=2 and ln.startswith('S:'):
+            dialogs.append(copy.copy(dialog))
     else:
-        dialogs.append(dialog)
         dialog = []
 
 if len(dialog) > 0:

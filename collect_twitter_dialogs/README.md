@@ -78,7 +78,7 @@ http://opensource.org/licenses/mit-license.php
     AmazonHelp.json   AskTSA.json ...
 
     To acquire a large amount of data, it is better to run this script
-    once a day, because the amount of data we can download is limitted
+    once a day, because the amount of data we can download is limited
     and older tweets cannot be accessed as time goes by.
 
     In the first run, it will take a long time to collect all possible
