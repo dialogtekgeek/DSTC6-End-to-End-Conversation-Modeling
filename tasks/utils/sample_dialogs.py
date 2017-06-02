@@ -18,9 +18,6 @@ for ln in open(sys.argv[1], 'r').readlines():
     else:
         dialog = []
 
-if len(dialog) > 0:
-    dialogs.append(dialog)
-
 random.seed(99)
 # 2nd argument is necessary for compatibility between python2.7~ and 3.2~
 random.shuffle(dialogs, random.random) 

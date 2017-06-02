@@ -11,5 +11,5 @@ echo extracting development data
 
 # extract 500 samples from dev set randomly for evaluation
 echo extracting evaluation data
-./sample_dialogs.py twitter_trial_data_dev.txt 500 > twitter_trial_data_eval.txt
+./utils/sample_dialogs.py twitter_trial_data_dev.txt 500 > twitter_trial_data_eval.txt
 

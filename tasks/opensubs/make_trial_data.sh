@@ -20,5 +20,5 @@ echo extracting training and evelopment data
 
 echo extracting evaluation data
 # extract 500 samples from dev set randomly for evaluation
-./sample_dialogs.py opensubs_data_dev.txt 500 > opensubs_trial_data_eval.txt
+./utils/sample_dialogs.py opensubs_data_dev.txt 500 > opensubs_trial_data_eval.txt
 
