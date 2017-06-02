@@ -9,7 +9,7 @@ Some bash scripts are also used to run the python scripts.
 Chainer (http://chainer.org) is used to perform neural network operations 
 in the training and evaluation scripts.
 So, you need to install the latest chainer by ``pip install chainer''
-In addtion, one GPU with 6GB or larger memory is necessary for runing 
+In addtion, one Nvidia GPU with 6GB or larger memory is necessary for runing 
 the script in realistic time.
 
 The following python modules are required to run some examples.
