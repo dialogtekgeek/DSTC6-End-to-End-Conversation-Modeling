@@ -101,6 +101,7 @@ fi
 
 # scoring
 if [ $stage -le 3 ]; then
+    echo scoring by BLEU metric
     tools/bleu_score.py ${expdir}/result_m${maxlen}_b${beam}_p${penalty}.txt \
     > ${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt
     cat ${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt
