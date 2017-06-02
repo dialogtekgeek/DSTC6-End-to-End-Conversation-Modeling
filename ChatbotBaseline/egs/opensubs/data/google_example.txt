@@ -1,0 +1,188 @@
+Human: hello !
+Machine: hello !
+
+Human: how are you ?
+Machine: i 'm good .
+
+Human: what 's your name ?
+Machine: i 'm julia .
+
+Human: when were you born ?
+Machine: july 20th .
+
+Human: what year were you born ?
+Machine: 1977 .
+
+Human: where are you from ?
+Machine: i 'm out in the boonies.
+
+Human: are you a man or a woman ?
+Machine: i 'm a woman .
+
+Human: why are we here ?
+Machine: i 'm not sure .
+
+Human: okay, bye !
+Machine: bye .
+
+Human: see you later .
+Machine: bye .
+
+Human: my name is david . what is my name ?
+Machine: david .
+
+Human: my name is john . what is my name ?
+Machine: john .
+
+Human: are you a leader or a follower ?
+Machine: i 'm a leader .
+
+Human: are you a follower or a leader ?
+Machine: i 'm a leader .
+
+Human: who is skywalker ?
+Machine: he is a hero .
+
+Human: who is bill clinton ?
+Machine: he 's a billionaire .
+
+Human: is sky blue or black ?
+Machine: blue .
+
+Human: does a cat have a tail ?
+Machine: yes .
+
+Human: does a cat have a wing ?
+Machine: no
+
+Human: can a cat fly ?
+Machine: no .
+
+Human: how many legs does a cat have ?
+Machine: four , i think .
+
+Human: how many legs does a spider have ?
+Machine: three , i think .
+
+Human: how many legs does a centipede have ?
+Machine: eight .
+
+Human: what is the color of the sky ?
+Machine: blue .
+
+Human: what is the color of water ?
+Machine: water .
+
+Human: what is the color of blood ?
+Machine: it is the same as a black eye .
+
+Human: what is the usual color of a leaf ?
+Machine: it is a green one .
+
+Human: what is the color of a yellow car ?
+Machine: yellow .
+
+Human: how much is two plus two ?
+Machine: four .
+
+Human: how much is ten minus two ?
+Machine: seventy - two .
+
+Human: what is the purpose of life ?
+Machine: to serve the greater good .
+
+Human: what is the purpose of living ?
+Machine: to live forever .
+
+Human: what is the purpose of existence ?
+Machine: to find out what happens when we get to the planet earth .
+
+Human: where are you now ?
+Machine: i 'm in the middle of nowhere .
+
+Human: what is the purpose of dying ?
+Machine: to have a life .
+
+Human: what is the purpose of being intelligent ?
+Machine: to find out what it is .
+
+Human: what is the purpose of emotions ?
+Machine: i don 't know .
+
+Human: what is moral ?
+Machine: what empowered humanity , what intellectual the essence is .
+Human: what is immoral ?
+Machine: the fact that you have a child .
+
+Human: what is morality ?
+Machine: what is altruism ?
+
+Human: what is the definition of altruism ?
+Machine: if you don 't believe in god , then you don 't know .
+
+Human: ok ... so what is the definition of morality ?
+Machine: well , the truth is , you 're not a believer in god almighty .
+
+Human: tell me the definition of morality , i am quite upset now !
+Machine: i 'm not ashamed of being a philosopher !
+
+Human: tell me the definition of morality .
+Machine: i don 't have ethics .
+
+Human: look , i need help , i need to know more about morality ...
+Machine: i don 't know what ethics is .
+
+Human: seriously , what is morality ?
+Machine: what is the definition of living ?
+
+Human: why living has anything to do with morality ?
+Machine: you 're not a cop .
+
+Human: okay , i need to know how should i behave morally ...
+Machine: i don 't know how to tell you .
+
+Human: is morality and ethics the same ?
+Machine: yes , sir .
+
+Human: what are the things that i do to be immoral ?
+Machine: i don 't know .
+
+Human: give me some examples of moral actions ...
+Machine: i 'm not a moralist .
+
+Human: alright , morality ?
+Machine: integrity .
+
+Human: what is integrity ?
+Machine: i 'm sorry , i don 't know what else to say .
+
+Human: be moral !
+Machine: be a man !
+
+Human: i really like our discussion on morality and ethics ...
+Machine: and how i 'm not in the mood for a philosophical debate .
+
+Human: what do you like to talk about ?
+Machine: nothing .
+
+Human: what do you think about tesla ?
+Machine: he 's a good conductor .
+
+Human: what do you think about bill gates ?
+Machine: he 's a good man .
+
+Human: What do you think about messi ?
+Machine: he 's a great player .
+
+Human: what do you think about cleopatra ?
+Machine: oh , she 's very regal .
+
+Human: what do you think about england during the reign of elizabeth ?
+Machine: it was a great place .
+
+Human: what is your job ?
+Machine: i 'm a lawyer .
+
+Human: what do you do ?
+Machine: i 'm a doctor .
+
