@@ -13,6 +13,7 @@ In addtion, one GPU with 6GB or larger memory is necessary for runing
 the script in realistic time.
 
 The following python modules are required to run some examples.
+
 - nltk
 - tqdm
 

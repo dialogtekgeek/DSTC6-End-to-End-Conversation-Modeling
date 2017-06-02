@@ -29,10 +29,6 @@ from tqdm import tqdm
 import logging
 import tqdm_logging
 
-from nltk.translate.bleu_score import sentence_bleu
-from nltk.translate.bleu_score import corpus_bleu
-from nltk.translate.bleu_score import SmoothingFunction
-
 # use the root logger
 logger = logging.getLogger("root")
 
@@ -46,9 +42,6 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile='',
 
     eos = vocab['<eos>']
     unk = vocab['<unk>']
-    refs = []
-    hyps = []
-    smooth = SmoothingFunction()
 
     if progress_bar:
         progress = tqdm(total=len(dataset))
@@ -56,6 +49,8 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile='',
 
     if outfile:
         fo = open(outfile,'w')
+
+    result = []
 
     for i in six.moves.range(len(dataset)):
         logger.debug('---- Dialog[%d] ----' % i)
@@ -100,15 +95,11 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile='',
         hyp = [vocablist[w] for w in besthyps[0][0]]
         if outfile:
             six.print_('S_HYP: %s\n' % ' '.join(hyp), file=fo, flush=True)
+
+        result.append(hyp)
         # for debugging
         logger.debug('S_HYP: %s' % ' '.join(hyp))
         logger.debug('Score: %f' % besthyps[0][1])
-        if len(ref) > 0:
-            logger.debug('Bleu4: %f' % (sentence_bleu([ref],hyp,smoothing_function=smooth.method1)))
-        # store results
-        if len(ref) > 0:
-            refs.append([ref])
-            hyps.append(hyp)
         # update progress bar
         if progress_bar:
             progress.update(1)
@@ -118,13 +109,6 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile='',
 
     if outfile:
         fo.close()
-
-    # obtain BLEU1-4
-    result = []
-    if len(refs) > 0 and len(hyps) > 0:
-        for n in [1,2,3,4]:
-            weights = [1./n] * n
-            result.append(('Bleu%d' %n ,corpus_bleu(refs,hyps,weights=weights)))
 
     return result
 
@@ -210,12 +194,9 @@ if __name__ =="__main__":
                                 beam=args.beam, penalty=args.penalty,
                                 progress_bar=not args.no_progress_bar)
     logger.info('----- finished -----')
-    logger.info('----- summary -----')
     logger.info('Number of dialogs: %d' % len(test_set))
+    logger.info('Number of hypotheses: %d' % len(result))
     logger.info('Wall time: %f (sec)' % (time.time() - start_time))
-    logger.info('----------------')
-    for measure,score in result:
-        logger.info('%s: %f' % (measure,score))
     logger.info('----------------')
     logger.info('done')
 

@@ -99,3 +99,10 @@ if [ $stage -le 2 ]; then
       --logfile ${expdir}/evaluate_m${maxlen}_b${beam}_p${penalty}.log
 fi
 
+# scoring
+if [ $stage -le 3 ]; then
+    tools/bleu_score.py ${expdir}/result_m${maxlen}_b${beam}_p${penalty}.txt \
+    > ${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt
+    cat ${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt
+    echo stored in ${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt
+fi
