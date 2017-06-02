@@ -1,4 +1,12 @@
-# DSTC6 End-to-end Conversation Model Task
+# DSTC6 Track2: End-to-End Conversation Modeling Track
+(1) Main task (mandatory): Customer service dialog using Twitter
+  (*) The tools to download the twitter data and transform to the dialog format from the data are provided. 
+
+  Task A: Full or part of the training data will be used to train conversation models. 
+  Task B: Any open data, e.g. from web, are available as external knowledge to generate informative sentences. 
+          But they should not overlap with the training, validation and test data provided by organizers.
+
+(2) Pilot task: Movie scenario dialog using OpenSubtitle
 
 # Necessary steps
 
