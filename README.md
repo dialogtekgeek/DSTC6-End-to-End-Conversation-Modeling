@@ -25,14 +25,17 @@
     $ cd tasks/twitter
     $ make_trial_data.sh
     ```
-    in `tasks/twitter`.
     
     Note: the extracted data are trial data at this moment.
 
 3. run baseline system (optional)
 
-    execute `run.sh` in `ChatbotBaseline/egs/twitter`.
-    (see ChatbotBaseline/README.md)
+    ```
+    cd ../ChatbotBaseline/egs/twitter
+    run.sh
+    ```
+    
+    (see `ChatbotBaseline/README.md`)
 
 ## OpenSubtitles task
 
