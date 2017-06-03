@@ -31,8 +31,8 @@
 3. run baseline system (optional)
 
     ```
-    cd ../ChatbotBaseline/egs/twitter
-    run.sh
+    $ cd ../ChatbotBaseline/egs/twitter
+    $ run.sh
     ```
     
     (see `ChatbotBaseline/README.md`)
@@ -50,14 +50,18 @@
 2. extract training and development sets from stored subtitle data 
 
     ```
+    $ cd tasks/opensubs
     $ make_trial_data.sh
     ```
-
     Note: the extracted data are trial data at this moment.
 
 3. run baseline system (optional)
 
-    execute `run.sh` in `ChatbotBaseline/egs/twitter`.
+    ```
+    $ cd ../ChatbotBaseline/egs/twitter
+    $ run.sh
+    ```
+    
     (see `ChatbotBaseline/README.md`)
 
 ## Directories and files
