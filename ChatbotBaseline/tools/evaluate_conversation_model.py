@@ -33,8 +33,11 @@ import tqdm_logging
 logger = logging.getLogger("root")
 
 # Generate sentences
-def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile='',
+def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile=None,
                       maxlen=20, beam=5, penalty=2.0, progress_bar=True):
+
+    # use chainer in testing mode
+    chainer.config.train = False
 
     vocablist = sorted(vocab.keys(), key=lambda s:vocab[s])
     if vocabsize:
@@ -69,7 +72,7 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile='',
             x_data[ x_data >= vocabsize ] = unk
             x = [ chainer.Variable(xp.asarray(x_data), volatile='on') ]
             y = [ chainer.Variable(xp.asarray(dataset[i][j][1][:-1]), volatile='on') ]
-            es,ds = model.loss(ds, x, y, None, train=False)
+            es,ds = model.loss(ds, x, y, None)
 
         # generate a sentence for the last input
         inp = [vocablist[w] for w in dataset[i][-1][0]]
@@ -119,29 +122,30 @@ if __name__ =="__main__":
     parser = argparse.ArgumentParser()
     # logging
     parser.add_argument('--logfile', '-l', default='', 
-                        help='write log info into a file')
+                        help='write log data into a file')
     parser.add_argument('--debug', '-d', action='store_true',
-                        help='write log info into a file')
-    parser.add_argument('--silent', action='store_true',
-                        help='silent mode')
+                        help='run in debug mode')
+    parser.add_argument('--silent', '-s', action='store_true',
+                        help='run in silent mode')
     parser.add_argument('--no-progress-bar', action='store_true',
                         help='hide the progress bar')
     # files 
-    parser.add_argument('--test', default='', 
-                        help='Filename of test data')
-    parser.add_argument('--model', '-m', default='', 
-                        help='Conversation model to be used')
+    parser.add_argument('--model', '-m', required=True,
+                        help='set conversation model to be used')
+    parser.add_argument('--test', required=True, 
+                        help='set filename of test data')
     parser.add_argument('--output', '-o', default='', 
-                        help='Output result files')
+                        help='write system output into a file')
     parser.add_argument('--target-speaker', '-T', default='', 
-                        help='Target speaker name for generating sentences')
+                        help='set target speaker name for system output')
     # search parameters
-    parser.add_argument('--beam', default=3, type=int,
-                        help='Beam width')
-    parser.add_argument('--maxlen', default=20, type=int,
-                        help='Maximum sequence length')
-    parser.add_argument('--penalty', default=2.0, type=float,
-                        help='Insertion penalty')
+    parser.add_argument('--beam', '-b', default=5, type=int,
+                        help='set beam width')
+    parser.add_argument('--penalty', '-p', default=2.0, type=float,
+                        help='set insertion penalty')
+    parser.add_argument('--maxlen', '-M', default=20, type=int,
+                        help='set maximum sequence length in beam search')
+    # select a GPU device
     parser.add_argument('--gpu', '-g', default=0, type=int,
                         help='GPU ID (negative value indicates CPU)')
 
@@ -152,7 +156,7 @@ if __name__ =="__main__":
         sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
     # set up the logger
-    tqdm_logging.setLogger(logger, args.logfile, silent=args.silent, debug=args.debug)
+    tqdm_logging.config(logger, args.logfile, silent=args.silent, debug=args.debug)
 
     # gpu setup
     if args.gpu >= 0:

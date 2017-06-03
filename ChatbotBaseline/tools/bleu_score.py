@@ -35,6 +35,6 @@ if len(refs) > 0 and len(hyps) > 0 and len(refs)==len(hyps):
         weights = [1./n] * n
         print('Bleu%d: %f' % (n, corpus_bleu(refs,hyps,weights=weights)))
 else:
-    print("Error: mismatched reeferences and hypotheses.")
+    print("Error: mismatched references and hypotheses.")
 print("--------------------------------")
 

@@ -28,14 +28,16 @@ if __name__ =="__main__":
 
     parser.add_argument('--gpu', '-g', default=0, type=int,
                         help='GPU ID (negative value indicates CPU)')
-    parser.add_argument('--model', '-m', default='', type=str,
-                        help='Attention model to be output')
-    parser.add_argument('--beam', default=5, type=int,
-                        help='Beam width')
-    parser.add_argument('--penalty', default=0, type=float,
-                        help='Insertion penalty')
-    parser.add_argument('--nbest', default=1, type=int,
-                        help='generate n-best responses')
+    parser.add_argument('--beam', '-b', default=5, type=int,
+                        help='set beam width')
+    parser.add_argument('--penalty', '-p', default=0., type=float,
+                        help='set insertion penalty')
+    parser.add_argument('--nbest', '-n', default=1, type=int,
+                        help='generate n-best sentences')
+    parser.add_argument('--maxlen', default=20, type=int,
+                        help='set maximum sequence length in beam search')
+    parser.add_argument('model', nargs=1,
+                        help='conversation model file')
 
     args = parser.parse_args()
     if args.gpu >= 0:
@@ -44,14 +46,13 @@ if __name__ =="__main__":
         xp = cuda.cupy
     else:
         xp = np
-    
-    # flush stdout
-    #six.PY2:
-    #    sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+
+    # use chainer in testing mode 
+    chainer.config.train = False
 
     # Prepare RNN model and load data
-    print('Loading model params from ' + args.model)
-    with open(args.model, 'r') as f:
+    print('Loading model params from ' + args.model[0])
+    with open(args.model[0], 'rb') as f:
         vocab, model, train_args = pickle.load(f)
     if args.gpu >= 0:
         model.to_gpu()
@@ -80,9 +81,9 @@ if __name__ =="__main__":
                     sentence.append(vocab[w] if w in vocab else unk)
 
             x_data = np.array(sentence, dtype=np.int32)
-            x = chainer.Variable(xp.asarray(x_data), volatile='on')
+            x = chainer.Variable(xp.asarray(x_data))
             besthyps = model.generate(state, x, eos, eos, unk=unk, 
-                                     maxlen=20,
+                                     maxlen=args.maxlen,
                                      beam=args.beam, 
                                      penalty=args.penalty,
                                      nbest=args.nbest)

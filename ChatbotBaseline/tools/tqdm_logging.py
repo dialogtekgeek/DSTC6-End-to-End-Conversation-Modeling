@@ -1,10 +1,16 @@
+# -*- coding: utf-8 -*-
+"""Logging extension with tqdm
+
+   Copyright (c) 2017 Takaaki Hori  (thori@merl.com)
+
+   This software is released under the MIT License.
+   http://opensource.org/licenses/mit-license.php
+
+"""
 
 import sys
 import logging
 from tqdm import tqdm
-
-# create logger object
-#logger = logging.getLogger("root")
 
 # tqdm logging handler
 class TqdmLoggingHandler(logging.Handler):
@@ -22,9 +28,9 @@ class TqdmLoggingHandler(logging.Handler):
         except:
             self.handleError(record)
 
-# obtain a logger
-def setLogger(logger, logfile='', mode='w', silent=False, debug=False,
-                 format="%(asctime)s %(levelname)s %(message)s"):
+# logger configulation
+def config(logger, logfile='', mode='w', silent=False, debug=False,
+           format="%(asctime)s %(levelname)s %(message)s"):
 
     #logger = logging.getLogger("root")
 

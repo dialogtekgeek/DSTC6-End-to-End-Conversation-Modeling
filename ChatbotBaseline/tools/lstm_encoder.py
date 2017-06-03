@@ -1,6 +1,11 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """LSTM Encoder
-   Copyright 2017 Mitsubishi Electric Research Labs
+
+   Copyright (c) 2017 Takaaki Hori  (thori@merl.com)
+
+   This software is released under the MIT License.
+   http://opensource.org/licenses/mit-license.php
+
 """
 
 import numpy as np
@@ -28,7 +33,7 @@ class LSTMEncoder(chainer.Chain):
             param.data[...] = np.random.uniform(-0.1, 0.1, param.data.shape)
 
 
-    def __call__(self, s, xs, train=True):
+    def __call__(self, s, xs):
         """Calculate all hidden states and cell states.
         Args:
             s  (~chainer.Variable or None): Initial (hidden & cell) states. If ``None``
@@ -46,9 +51,9 @@ class LSTMEncoder(chainer.Chain):
         else:
             xs = [ self.embed(xs[0]) ]
         if s is not None:
-            hy, cy, ys = self.lstm(s[0], s[1], xs, train=train)
+            hy, cy, ys = self.lstm(s[0], s[1], xs)
         else:
-            hy, cy, ys = self.lstm(None, None, xs, train=train)
+            hy, cy, ys = self.lstm(None, None, xs)
 
         return (hy,cy), ys
 

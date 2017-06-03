@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""Sequence-to-sequence model module
+
+   Copyright (c) 2017 Takaaki Hori  (thori@merl.com)
+
+   This software is released under the MIT License.
+   http://opensource.org/licenses/mit-license.php
+
+"""
 
 import six
 import chainer
@@ -19,7 +28,7 @@ class Sequence2SequenceModel(chainer.Chain):
         )
 
 
-    def loss(self,es,x,y,t, train=True):
+    def loss(self,es,x,y,t):
         """ Forward propagation and loss calculation
             Args:
                 es (pair of ~chainer.Variable): encoder state 
@@ -32,12 +41,12 @@ class Sequence2SequenceModel(chainer.Chain):
                 ds (pair of ~chainer.Variable(s)): decoder state
                 loss (~chainer.Variable) : cross-entropy loss
         """
-        es,ey = self.encoder(es,x,train=train)
-        ds,dy = self.decoder(es,y,train=train)
+        es,ey = self.encoder(es,x)
+        ds,dy = self.decoder(es,y)
         if t is not None:
             loss = F.softmax_cross_entropy(dy,t)
             # avoid NaN gradients (See: https://github.com/pfnet/chainer/issues/2505)
-            if train:
+            if chainer.config.train:
                 loss += F.sum(F.concat(ey, axis=0)) * 0
             return es, ds, loss
         else: # if target is None, it only returns states
@@ -64,7 +73,7 @@ class Sequence2SequenceModel(chainer.Chain):
                  - ds (pair of ~chainer.Variable(s)): decoder state
         """
         # encoder
-        es,ey = self.encoder(es, [x], train=False)
+        es,ey = self.encoder(es, [x])
         # beam search
         ds = self.decoder.initialize(es, ey, sos)
         hyplist = [([], 0., ds)]

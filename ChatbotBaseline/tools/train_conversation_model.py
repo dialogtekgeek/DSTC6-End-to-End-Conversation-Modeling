@@ -72,6 +72,7 @@ class Status:
 
 # Traning routine
 def train_step(model, optimizer, dataset, batchset, status, xp):
+    chainer.config.train = True
     train_loss = 0.
     train_nsamples = 0
 
@@ -110,6 +111,7 @@ def train_step(model, optimizer, dataset, batchset, status, xp):
 
 # Validation routine
 def validate_step(model, dataset, batchset, status, xp):
+    chainer.config.train = False
     validate_loss = 0.
     validate_nsamples = 0
     num_interacts = sum([len(dataset[idx[0]]) for idx in batchset])
@@ -121,14 +123,14 @@ def validate_step(model, dataset, batchset, status, xp):
         ds = None
         for j in six.moves.range(len(dataset[batchset[i][0]])):
             # prepare input, output, and target
-            x = [ chainer.Variable(xp.asarray(dataset[k][j][0]), volatile='on') 
-                                        for k in batchset[i] ]
-            y = [ chainer.Variable(xp.asarray(dataset[k][j][1][:-1]), volatile='on') 
+            x = [ chainer.Variable(xp.asarray(dataset[k][j][0])) for k in batchset[i] ]
+            y = [ chainer.Variable(xp.asarray(dataset[k][j][1][:-1]))
                                         for k in batchset[i] ]
             t = chainer.Variable(xp.asarray(np.concatenate( [dataset[k][j][1][1:] 
-                                        for k in batchset[i]] )), volatile='on')
+                                        for k in batchset[i]] )))
             # compute validation loss
-            es,ds,loss = model.loss(ds, x, y, t, train=False)
+            es,ds,loss = model.loss(ds, x, y, t)
+
             # accumulate
             validate_loss += loss.data * len(t.data)
             validate_nsamples += len(t.data)
@@ -147,66 +149,71 @@ def main():
     parser = argparse.ArgumentParser()
     # logging
     parser.add_argument('--logfile', '-l', default='', type=str,
-                        help='write log info into a file')
+                        help='write log data into a file')
     parser.add_argument('--debug', '-d', action='store_true',
-                        help='write log info into a file')
-    parser.add_argument('--silent', action='store_true',
-                        help='silent mode')
+                        help='run in debug mode')
+    parser.add_argument('--silent', '-s', action='store_true',
+                        help='run in silent mode')
     parser.add_argument('--no-progress-bar', action='store_true',
-                        help='hide the progress bar')
+                        help='hide progress bar')
     # train and validate data
     parser.add_argument('--train', default='train.txt', type=str,
-                        help='Filename of train data')
+                        help='set filename of training data')
     parser.add_argument('--validate', default='dev.txt', type=str,
-                        help='Filename of validation data')
-    parser.add_argument('--vocab-size', default=0, type=int,
-                        help='Vocabulary size')
-    parser.add_argument('--max-batch-length', default=20, type=int,
-                        help='Maximum length for controling batch size')
-    # Model structure
-    parser.add_argument('--initial-model', '-i', default='', type=str,
-                        help='Initial model to be used')
-    parser.add_argument('--model', '-m', default='', type=str,
-                        help='Trained model to be output')
-    parser.add_argument('--enc-layer', default=2, type=int,
-                        help='Number of embedding layer units')
-    parser.add_argument('--enc-esize', default=200, type=int,
-                        help='Number of embedding layer units')
-    parser.add_argument('--enc-hsize', default=512, type=int,
-                        help='Number of hidden units')
-    parser.add_argument('--dec-layer', default=2, type=int,
-                        help='Number of decoder projection layer units')
-    parser.add_argument('--dec-esize', default=200, type=int,
-                        help='Number of decoder hidden units')
-    parser.add_argument('--dec-hsize', default=512, type=int,
-                        help='Number of decoder hidden units')
-    parser.add_argument('--dec-psize', default=100, type=int,
-                        help='Number of decoder projection layer units')
-    # training conditions
-    parser.add_argument('--optimizer', '-o', default='Adam', type=str, 
-                        help="optimizer (SGD, Adam, AdaDelta, RMSprop, ...)")
-    parser.add_argument('--L2-weight', default=0.0, type=float,
-                        help="Set weight of L2-regularization term")
-    parser.add_argument('--clip-grads', default=5., type=float,
-                        help="Set gradient clipping threshold")
-    parser.add_argument('--dropout-rate', default=0.5, type=float,
-                        help="Dropout rate in training")
-    parser.add_argument('--num-epochs', '-e', default=20, type=int,
-                        help='Number of epochs to be trained')
-    parser.add_argument('--learn-rate', '-R', default=1.0, type=float,
-                        help='Initial learning rate for SGD')
-    parser.add_argument('--learn-decay', '-D', default=1.0, type=float,
-                        help='Decaying ratio of learning rate or epsilon')
-    parser.add_argument('--lower-bound', default=1e-16, type=float,
-                        help='Lower-bound of learning rate or epsilon')
-    parser.add_argument('--batch-size', '-b', default=20, type=int,
-                        help='Batch size for training and validation')
+                        help='set filename of validation data')
+    parser.add_argument('--vocab-size', '-V', default=0, type=int,
+                        help='set vocabulary size (0 means no limitation)')
     parser.add_argument('--target-speaker', '-T', default='S', 
-                        help='Target speaker name to be learned for system replies')
+                        help='set target speaker name to be learned for system output')
+    # file settings
+    parser.add_argument('--initial-model', '-i', 
+                        help='start training from an initial model')
+    parser.add_argument('--model', '-m', required=True,
+                        help='set prefix of output model files')
     parser.add_argument('--resume', action='store_true', 
-                        help='Resume training from previously saved snapshot')
-    parser.add_argument('--snapshot', default='', type=str,
-                        help='Dump a snapshot to a file')
+                        help='resume training from a previously saved snapshot')
+    parser.add_argument('--snapshot', type=str,
+                        help='dump a snapshot to a file after each epoch')
+    # Model structure
+    parser.add_argument('--enc-layer', default=2, type=int,
+                        help='number of encoder layers')
+    parser.add_argument('--enc-esize', default=100, type=int,
+                        help='number of encoder input-embedding units')
+    parser.add_argument('--enc-hsize', default=512, type=int,
+                        help='number of encoder hidden units')
+
+    parser.add_argument('--dec-layer', default=2, type=int,
+                        help='number of decoder layers')
+    parser.add_argument('--dec-esize', default=100, type=int,
+                        help='number of decoder input-embedding units')
+    parser.add_argument('--dec-hsize', default=512, type=int,
+                        help='number of decoder hidden units')
+    parser.add_argument('--dec-psize', default=100, type=int,
+                        help='number of decoder pre-output projection units')
+    # training conditions
+    parser.add_argument('--optimizer', default='Adam', type=str, 
+                        help="set optimizer (SGD, Adam, AdaDelta, RMSprop, ...)")
+    parser.add_argument('--L2-weight', default=0.0, type=float,
+                        help="set weight for L2-regularization term")
+    parser.add_argument('--clip-grads', default=5., type=float,
+                        help="set gradient clipping threshold")
+    parser.add_argument('--dropout-rate', default=0.5, type=float,
+                        help="set dropout rate in training")
+    parser.add_argument('--num-epochs', '-e', default=20, type=int,
+                        help='number of epochs to be trained')
+    parser.add_argument('--learn-rate', '-R', default=1.0, type=float,
+                        help='set initial learning rate for SGD')
+    parser.add_argument('--learn-decay', default=1.0, type=float,
+                        help='set decaying ratio of learning rate or epsilon')
+    parser.add_argument('--lower-bound', default=1e-16, type=float,
+                        help='set threshold of learning rate or epsilon for early stopping')
+    parser.add_argument('--batch-size', '-b', default=50, type=int,
+                        help='set batch size for training and validation')
+    parser.add_argument('--max-batch-length', default=20, type=int,
+                        help='set maximum sequence length to control batch size')
+    parser.add_argument('--seed', default=99, type=int,
+                        help='set a seed for random numbers')
+    # select a GPU device
     parser.add_argument('--gpu', '-g', default=0, type=int,
                         help='GPU ID (negative value indicates CPU)')
 
@@ -216,25 +223,29 @@ def main():
     if six.PY2:
         sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
     # set up the logger
-    tqdm_logging.setLogger(logger, args.logfile, mode=('a' if args.resume else 'w'),
-                           silent=args.silent, debug=args.debug)
+    tqdm_logging.config(logger, args.logfile, mode=('a' if args.resume else 'w'),
+                        silent=args.silent, debug=args.debug)
     # gpu setup
     if args.gpu >= 0:
         cuda.check_cuda_available()
         cuda.get_device(args.gpu).use()
         xp = cuda.cupy
-        xp.random.seed(1)
+        xp.random.seed(args.seed)
     else:
         xp = np
 
     # randomize
-    np.random.seed(1)
-    random.seed(1)
+    np.random.seed(args.seed)
+    random.seed(args.seed)
 
     logger.info('----------------------------------')
     logger.info('Train a neural conversation model')
     logger.info('----------------------------------')
     if args.resume:
+        if not args.snapshot:
+            logger.error('snapshot file is not spacified.')
+            sys.exit()
+
         with open(args.snapshot, 'rb') as f:
             vocab, optimizer, status, args = pickle.load(f)
         logger.info('Resume training from epoch %d' % status.epoch)
@@ -243,7 +254,7 @@ def main():
     else:    
         logger.info('Args ' + str(args))
         # Prepare RNN model and load data
-        if args.initial_model != '':
+        if args.initial_model:
             logger.info('Loading a model from ' + args.initial_model)
             with open(args.initial_model, 'rb') as f:
                 vocab, model, tmp_args = pickle.load(f)

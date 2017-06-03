@@ -1,6 +1,11 @@
-#!/usr/bin/env python
-"""LSTM Decoder
-   Copyright 2017 Mitsubishi Electric Research Labs
+# -*- coding: utf-8 -*-
+"""LSTM Decoder module
+
+   Copyright (c) 2017 Takaaki Hori  (thori@merl.com)
+
+   This software is released under the MIT License.
+   http://opensource.org/licenses/mit-license.php
+
 """
 
 import numpy as np
@@ -34,7 +39,7 @@ class LSTMDecoder(chainer.Chain):
             param.data[...] = np.random.uniform(-0.1, 0.1, param.data.shape)
 
 
-    def __call__(self, s, xs, train=True):
+    def __call__(self, s, xs):
         """Calculate all hidden states, cell states, and output prediction.
 
         Args:
@@ -55,13 +60,13 @@ class LSTMDecoder(chainer.Chain):
             xs = [ self.embed(xs[0]) ]
 
         if s is not None:
-            hy, cy, ys = self.lstm(s[0], s[1], xs, train=train)
+            hy, cy, ys = self.lstm(s[0], s[1], xs)
         else:
-            hy, cy, ys = self.lstm(None, None, xs, train=train)
+            hy, cy, ys = self.lstm(None, None, xs)
 
         #y = self.out(F.tanh(self.proj(F.concat(ys, axis=0))))
         y = self.out(self.proj(
-                F.dropout(F.concat(ys, axis=0), ratio=self.dropout, train=train)))
+                F.dropout(F.concat(ys, axis=0), ratio=self.dropout)))
         return (hy,cy),y
 
 
@@ -96,12 +101,12 @@ class LSTMDecoder(chainer.Chain):
         else:
             xp = np
 
-        v = chainer.Variable(xp.array([i],dtype=np.int32), volatile='on')
+        v = chainer.Variable(xp.array([i],dtype=np.int32))
         x = self.embed(v)
         if s is not None:
-            hy, cy, dy = self.lstm(s[0], s[1], [x], train=False)
+            hy, cy, dy = self.lstm(s[0], s[1], [x])
         else:
-            hy, cy, dy = self.lstm(None, None, [x], train=False)
+            hy, cy, dy = self.lstm(None, None, [x])
 
         return hy, cy, dy
 

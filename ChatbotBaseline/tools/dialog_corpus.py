@@ -1,6 +1,12 @@
 #!/usr/bin/env python
-"""Utterance classification using context-sensitive LSTM
-   Copyright 2015 Mitsubishi Electric Research Labs
+# -*- coding: utf-8 -*-
+"""Dialog corpus handler
+
+   Copyright (c) 2017 Takaaki Hori  (thori@merl.com)
+
+   This software is released under the MIT License.
+   http://opensource.org/licenses/mit-license.php
+
 """
 
 import re
