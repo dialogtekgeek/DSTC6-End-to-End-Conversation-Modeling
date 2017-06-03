@@ -8,10 +8,13 @@ Some bash scripts are also used to run the python scripts.
 ## Requirements
 Chainer <http://chainer.org> is used to perform neural network operations 
 in the training and evaluation scripts.
-So, you need to install the latest chainer (2.0) by `pip install chainer`
+So, you need to install the latest chainer (2.0) by
+```
+$ pip install chainer
+```
 In addtion, one NVIDIA GPU with 6GB or larger memory is necessary for runing 
 the scripts in realistic time.  
-CUDA 7.5 or higher with cuDNN is recommended.
+CUDA 7.5 or higher with cuDNN 5.1 or higher is recommended.
 
 The following python modules are required.
 
@@ -24,9 +27,9 @@ We prepared two example tasks based on twitter and open subtitles.
 
 ### Twitter task
 You can train and evaluate a conversation model by
-```sh
-cd egs/twitter
-run.sh
+```
+$ cd egs/twitter
+$ run.sh
 ```
 where we assume that you have already generated the following dialog data files
 in `../tasks/twitter`.
@@ -42,9 +45,9 @@ Models and results will be stored in `egs/twitter/exp`
 
 ### OpenSubtiles task
 You can train and evaluate a conversation model by
-```sh
-cd egs/opensubs
-run.sh
+```
+$ cd egs/opensubs
+$ run.sh
 ```
 where we assume that you have already generated the following dialog data files
 in `../tasks/opensubs`.
