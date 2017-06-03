@@ -30,7 +30,7 @@ if __name__ =="__main__":
                         help='GPU ID (negative value indicates CPU)')
     parser.add_argument('--beam', '-b', default=5, type=int,
                         help='set beam width')
-    parser.add_argument('--penalty', '-p', default=0., type=float,
+    parser.add_argument('--penalty', '-p', default=1., type=float,
                         help='set insertion penalty')
     parser.add_argument('--nbest', '-n', default=1, type=int,
                         help='generate n-best sentences')
@@ -51,13 +51,14 @@ if __name__ =="__main__":
     chainer.config.train = False
 
     # Prepare RNN model and load data
+    print("--- do neural conversations ------")
     print('Loading model params from ' + args.model[0])
     with open(args.model[0], 'rb') as f:
         vocab, model, train_args = pickle.load(f)
     if args.gpu >= 0:
         model.to_gpu()
     # report data summary
-    print('#vocab = %d' % len(vocab))
+    print('vocabulary size = %d' % len(vocab))
     vocablist = sorted(vocab.keys(), key=lambda s:vocab[s])
     # generate sentences
     print("--- start conversation [push Cntl-D to exit] ------")

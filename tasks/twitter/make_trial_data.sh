@@ -13,3 +13,4 @@ echo extracting development data
 echo extracting evaluation data
 ./utils/sample_dialogs.py twitter_trial_data_dev.txt 500 > twitter_trial_data_eval.txt
 
+echo done

@@ -31,10 +31,9 @@ penalty=1.0
 maxlen=30
 
 # data files
-train_data=./data/opensubs_trial_data_train.txt
-valid_data=./data/opensubs_trial_data_dev.txt
-eval_data=./data/opensubs_trial_data_eval.txt
-#eval_data=./data/google_examples.txt
+train_data=${CHATBOT_DATADIR}/opensubs_trial_data_train.txt
+valid_data=${CHATBOT_DATADIR}/opensubs_trial_data_dev.txt
+eval_data=${CHATBOT_DATADIR}/opensubs_trial_data_eval.txt
 
 # get options
 . utils/parse_options.sh || exit 1;
@@ -108,4 +107,3 @@ if [ $stage -le 3 ]; then
     cat ${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt
     echo stored in ${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt
 fi
- 

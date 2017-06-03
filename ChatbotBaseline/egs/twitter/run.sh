@@ -31,9 +31,9 @@ penalty=1.0
 maxlen=30
 
 # data files
-train_data=./data/twitter_trial_data_train.txt
-valid_data=./data/twitter_trial_data_dev.txt
-eval_data=./data/twitter_trial_data_eval.txt
+train_data=${CHATBOT_DATADIR}/twitter_trial_data_train.txt
+valid_data=${CHATBOT_DATADIR}/twitter_trial_data_dev.txt
+eval_data=${CHATBOT_DATADIR}/twitter_trial_data_eval.txt
 
 # get options
 . utils/parse_options.sh || exit 1;
