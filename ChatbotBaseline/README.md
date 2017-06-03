@@ -69,7 +69,7 @@ if the trained model is `sample_twitter_model.best`, you can run as
 $ cd demo
 $ demo.sh --model sample_twitter_model.best
 --- do neural conversations ------
-Loading model params from ../egs/twitter/exp/lstm_Adam_ee100_eh512_de100_dh512_dp100_bs100_dr0.5/conversation_model.8
+Loading model params from sample_twitter_model.best
 vocabulary size = 20000
 --- start conversation [push Cntl-D to exit] ------
 U: hello!
