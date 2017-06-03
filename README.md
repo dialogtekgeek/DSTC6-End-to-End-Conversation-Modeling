@@ -54,7 +54,7 @@
 3. run baseline system (optional)
 
     execute `run.sh` in `ChatbotBaseline/egs/twitter`.
-    (see ChatbotBaseline/README.md)
+    (see `ChatbotBaseline/README.md`)
 
 ## Directories and files
 * README.md : this file
