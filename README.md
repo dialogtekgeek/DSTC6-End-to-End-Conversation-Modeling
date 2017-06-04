@@ -23,7 +23,7 @@
     ```
     (see `collect_twitter_dialogs/README.md`)
    
-2. extract training, development and test data from stored twitter dialog data
+2. extract training, development and test sets from stored twitter dialog data
     
     ```
     $ cd ../../tasks/twitter
@@ -51,7 +51,7 @@
     $ tar zxvf en.tar.gz
     ```
 
-2. extract training and development sets from stored subtitle data 
+2. extract training, development and test sets from stored subtitle data 
 
     ```
     $ make_trial_data.sh
