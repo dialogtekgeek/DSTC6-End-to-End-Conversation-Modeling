@@ -12,7 +12,7 @@
 stored_data=./OpenSubtitles2016/xml/en
 
 # extract train and dev sets
-echo extracting training and evelopment data
+echo extracting training, development, and test sets
 ./extract_opensubs_dialogs.py \
    --output opensubs_trial_data_train.txt opensubs_trial_data_dev.txt \
    --ratio 0.1 0.001 \
