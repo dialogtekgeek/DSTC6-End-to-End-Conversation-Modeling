@@ -70,8 +70,8 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile=None,
 
             x_data = np.copy(dataset[i][j][0])
             x_data[ x_data >= vocabsize ] = unk
-            x = [ chainer.Variable(xp.asarray(x_data), volatile='on') ]
-            y = [ chainer.Variable(xp.asarray(dataset[i][j][1][:-1]), volatile='on') ]
+            x = [ chainer.Variable(xp.asarray(x_data)) ]
+            y = [ chainer.Variable(xp.asarray(dataset[i][j][1][:-1])) ]
             es,ds = model.loss(ds, x, y, None)
 
         # generate a sentence for the last input
@@ -88,7 +88,7 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile=None,
 
         x_data = np.copy(dataset[i][-1][0])
         x_data[ x_data >= vocabsize ] = unk
-        x = chainer.Variable(xp.asarray(x_data), volatile='on')
+        x = chainer.Variable(xp.asarray(x_data))
         # generate a sentence:
         # model.generate() returns n-best list, which is a list of 
         # tuples as [ (word Id sequence, score, decoder state), ... ]
