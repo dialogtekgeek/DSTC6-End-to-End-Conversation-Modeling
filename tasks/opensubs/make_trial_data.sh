@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# you can download English data of OpenSubtitle2016 from
+# you can download English data of OpenSubtitles2016 from
 # 
 # http://opus.lingfil.uu.se/download.php?f=OpenSubtitles2016/en.tar.gz
 # 
