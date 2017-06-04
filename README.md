@@ -17,12 +17,16 @@
 
 1. prepare data set using `collect_twitter_dialogs` scripts.
 
+    ```
+    $ cd tasks/collect_twitter_dialogs
+    $ collect.sh
+    ```
     (see `collect_twitter_dialogs/README.md`)
    
 2. extract training, development and test data from stored twitter dialog data
     
     ```
-    $ cd tasks/twitter
+    $ cd ../tasks/twitter
     $ make_trial_data.sh
     ```
     
@@ -31,7 +35,7 @@
 3. run baseline system (optional)
 
     ```
-    $ cd ../ChatbotBaseline/egs/twitter
+    $ cd ../../ChatbotBaseline/egs/twitter
     $ run.sh
     ```
     
@@ -50,7 +54,6 @@
 2. extract training and development sets from stored subtitle data 
 
     ```
-    $ cd tasks/opensubs
     $ make_trial_data.sh
     ```
     Note: the extracted data are trial data at this moment.
@@ -58,7 +61,7 @@
 3. run baseline system (optional)
 
     ```
-    $ cd ../ChatbotBaseline/egs/twitter
+    $ cd ../../ChatbotBaseline/egs/opensubs
     $ run.sh
     ```
     
