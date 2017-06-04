@@ -172,7 +172,7 @@ if __name__ =="__main__":
     logger.info('Args ' + str(args)) 
     # Prepare RNN model and load data
     logger.info('Loading model params from ' + args.model)
-    with open(args.model, 'r') as f:
+    with open(args.model, 'rb') as f:
         vocab, model, train_args = pickle.load(f)
     if args.gpu >= 0:
         model.to_gpu()
