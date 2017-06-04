@@ -43,7 +43,7 @@
 
 ## OpenSubtitles task
 
-1. download OpenSubtitles2016 data:
+1. download OpenSubtitles2016 data
 
     ```
     $ cd tasks/opensubs
