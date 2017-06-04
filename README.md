@@ -18,15 +18,15 @@
 1. prepare data set using `collect_twitter_dialogs` scripts.
 
     ```
-    $ cd tasks/collect_twitter_dialogs
+    $ cd collect_twitter_dialogs
     $ collect.sh
     ```
-    (see `collect_twitter_dialogs/README.md`)
+    (a twitter account and access keys are necessary to run the script. follow the instruction in `collect_twitter_dialogs/README.md`)
    
 2. extract training, development and test sets from stored twitter dialog data
     
     ```
-    $ cd ../../tasks/twitter
+    $ cd ../tasks/twitter
     $ make_trial_data.sh
     ```
     
