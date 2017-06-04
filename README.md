@@ -26,7 +26,7 @@
 2. extract training, development and test data from stored twitter dialog data
     
     ```
-    $ cd ../tasks/twitter
+    $ cd ../../tasks/twitter
     $ make_trial_data.sh
     ```
     
