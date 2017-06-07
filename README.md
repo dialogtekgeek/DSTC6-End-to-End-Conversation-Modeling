@@ -13,6 +13,31 @@
 
 # Necessary steps
 
+## Preparation
+Most tools are written in python, which were tested on python2.7.6+ and python3.4.1+,
+and some bash scripts are also used to execute those tools.
+
+For data preparation, you will need additional python modules as follows:
+
+* six
+* tqdm
+* nltk
+
+which can be installed by
+```
+pip install <module-name>
+```
+or
+```
+pip install <module-name> -t <some-directory>
+```
+where `<some-directory>` is a directory storing python modules and needs to be accessible from python,
+e.g. by including it in PYTHONPATH environment variable.
+
+If you try the baseline system, you will need Chainer <http://chainer.org> ,a deep learning toolkit, 
+to perform training and evaluation of neural conversation models.
+Please follow the instruction in `ChatbotBaseline/README.md`.
+
 ## Twitter task
 
 1. prepare data set using `collect_twitter_dialogs` scripts.
