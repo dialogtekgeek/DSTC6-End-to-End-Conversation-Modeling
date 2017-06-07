@@ -63,7 +63,7 @@ http://opensource.org/licenses/mit-license.php
     ```
 
     We recommend to use virtualenv or some other virtual enviroment to handle pythone modules.
-Otherwise, you can spacify the directory to install python modules as
+Otherwise, you can specify the directory to install python modules as
 
     ```
     $ pip install <module_name> -t <some_directory>
