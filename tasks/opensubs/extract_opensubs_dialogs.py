@@ -20,25 +20,31 @@ from tqdm import tqdm
 import six
 import argparse
 
-# regular expressions for cleaning up text
-tag_re = re.compile(r'(<!--.*?-->|<[^>]*>|{[^}]*}|\([^\)]*\)|\[[^\]]*\])')
-symbol_re = re.compile(u'([-–—]+$| [-–—]+|[-–—]+ |% %|#+|\'\'|``| \' |[\(\)\"])')
-space_re = re.compile(r'\s+')
-appos1_re = re.compile(r' \' (?=(em|im|s|t|bout|cause)\s+)')
-appos2_re = re.compile(r'(?<=n) \' ')
-title_re = re.compile(r'(?<=( mr| jr| ms| dr| st|mrs)) \.')
-speaker_re = re.compile(r'^\s*[A-z]*\s*:')
-ignore_re = re.compile(r'^(\s*|[\.\?$%!,:;])$')
 
 def preprocess(sent):
-    new_sent = tag_re.sub(' ', sent).replace('\\\'','\'').lower()
-    new_sent = appos1_re.sub(' \'', new_sent)
-    new_sent = appos2_re.sub('\' ', new_sent)
-    new_sent = title_re.sub('. ', new_sent)
-    new_sent = speaker_re.sub('', new_sent)
-    new_sent = space_re.sub(' ', symbol_re.sub(' ', new_sent)).strip()
-    if not ignore_re.match(new_sent):
-        return new_sent.encode('utf-8')
+    """ text preprocessing using regular expressions
+    """
+    # remove tags
+    new_sent = re.sub(r'(<!--.*?-->|<[^>]*>|{[^}]*}|\([^\)]*\)|\[[^\]]*\])',' ', sent)
+    # replace apostrophe and convert letters to lower case
+    new_sent = new_sent.replace('\\\'','\'').lower()
+    # delete a space right after an isolated apostrophe
+    new_sent = re.sub(r' \' (?=(em|im|s|t|bout|cause)\s+)', ' \'', new_sent)
+    # delete a space right before an isolated apostrophe
+    new_sent = re.sub(r'(?<=n) \' ', '\' ', new_sent)
+    # delete a space right before a period for titles
+    new_sent = re.sub(r'(?<=( mr| jr| ms| dr| st|mrs)) \.', '. ', new_sent)
+    # remove speaker tag "xxx: "
+    new_sent = re.sub(r'^\s*[A-z]*\s*:', '', new_sent)
+    # remove unnecessary symbols
+    new_sent = re.sub(u'([-–—]+$| [-–—]+|[-–—]+ |% %|#+|\'\'|``| \' |[\(\)\"])', ' ', new_sent)
+    # convert i̇->i
+    new_sent = re.sub(u'i̇','i', new_sent)
+    # convert multiple spaces to a single space
+    new_sent = re.sub(r'\s+', ' ', new_sent).strip()
+    # ignore sentence with anly space or some symbols
+    if not re.match(r'^(\s*|[\.\?$%!,:;])$', new_sent):
+        return new_sent
     else:
         return '' 
 
@@ -59,8 +65,11 @@ def extract(filePath, corpus):
                 sent += ' ' + elem.text
 
         if not sent.strip().endswith(':'):
-            new_sent = preprocess(sent)
-            #six.print_('%s -> %s' % (sent.encode('utf-8'),new_sent))
+            if six.PY2:
+                new_sent = preprocess(sent).encode('utf-8')
+            else:
+                new_sent = preprocess(sent)
+
             if new_sent:
                 corpus.append((new_sent, len(new_sent.split())))
             sent = ''
@@ -83,6 +92,7 @@ if __name__ == '__main__':
 
     if len(args.output) != len(args.ratio):
         raise Exception('The number of output files (%d) and the number extraction ratios (%d) should be the same.' % (len(args.output), len(args.partion)))
+    random.seed(99)
 
     rootdir = args.rootdir
     print('collecting files from ' + rootdir)
@@ -97,7 +107,6 @@ if __name__ == '__main__':
         extract(xmlfiles[n], corpus)
    
     print('%d sentences loaded' % len(corpus))
-    random.seed(1)
     indices = list(six.moves.range(len(corpus)-1))
     random.shuffle(indices, random.random)
 
