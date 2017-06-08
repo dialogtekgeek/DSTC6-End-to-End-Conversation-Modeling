@@ -25,7 +25,7 @@ http://opensource.org/licenses/mit-license.php
     $ pip install requests==2.5.3 -t <some-directory>
     ```
 
-    whre we assume that the module has been installed in &lt;some-directory&gt;
+    where we assume that the module has been installed in &lt;some-directory&gt;
 
 ## Preparation
 
@@ -63,12 +63,12 @@ http://opensource.org/licenses/mit-license.php
     ```
 
     We recommend to use virtualenv or some other virtual enviroment to handle pythone modules.
-Otherwise, you can spacify the directory to install python modules as
+Otherwise, you can specify the directory to install python modules as
 
     ```
     $ pip install <module_name> -t <some_directory>
     ```
-    In this case, &gt;some-directory&lt; must be included in `PYTHONPATH` environment
+    In this case, &lt;some-directory&gt; must be included in `PYTHONPATH` environment
     variable to use the modules.
 
 ## How to use:
