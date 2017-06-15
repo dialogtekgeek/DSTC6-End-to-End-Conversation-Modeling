@@ -83,7 +83,7 @@ if __name__ =="__main__":
 
             x_data = np.array(sentence, dtype=np.int32)
             x = chainer.Variable(xp.asarray(x_data))
-            besthyps = model.generate(state, x, eos, eos, unk=unk, 
+            besthyps,state = model.generate(state, x, eos, eos, unk=unk, 
                                      maxlen=args.maxlen,
                                      beam=args.beam, 
                                      penalty=args.penalty,
@@ -102,7 +102,6 @@ if __name__ =="__main__":
                         if w != eos:
                             sys.stdout.write(' ' + vocablist[w])
                     sys.stdout.write(' (%f)' % s[1])
-            state = besthyps[0][2]
         else:
             print("--- start conversation [push Cntl-D to exit] ------")
             state = None

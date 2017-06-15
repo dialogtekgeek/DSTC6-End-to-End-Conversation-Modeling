@@ -91,8 +91,9 @@ def generate_sentences(model, dataset, vocab, xp, vocabsize=None, outfile=None,
         x = chainer.Variable(xp.asarray(x_data))
         # generate a sentence:
         # model.generate() returns n-best list, which is a list of 
-        # tuples as [ (word Id sequence, score, decoder state), ... ]
-        besthyps = model.generate(ds, x, eos, eos, unk=unk,
+        # tuples as [ (word Id sequence, score), ... ] and 
+        # also returns the best decoder state
+        besthyps,_ = model.generate(ds, x, eos, eos, unk=unk,
                                  maxlen=maxlen, beam=beam, penalty=penalty, nbest=1)
         # write result
         hyp = [vocablist[w] for w in besthyps[0][0]]

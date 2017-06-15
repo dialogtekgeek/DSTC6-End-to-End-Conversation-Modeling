@@ -67,16 +67,17 @@ class Sequence2SequenceModel(chainer.Chain):
                                  of each output label.
                 nbest (int): number of n-best hypotheses to be output
             Return:
-                list of tuples (hyp, score, ds): n-best hypothesis list
+                list of tuples (hyp, score): n-best hypothesis list
                  - hyp (list): generated word Id sequence
                  - score (float): hypothesis score
-                 - ds (pair of ~chainer.Variable(s)): decoder state
+                pair of ~chainer.Variable(s)): decoder state of best hypothesis
         """
         # encoder
         es,ey = self.encoder(es, [x])
         # beam search
         ds = self.decoder.initialize(es, ey, sos)
         hyplist = [([], 0., ds)]
+        best_state = None
         comp_hyplist = []
         for l in six.moves.range(maxlen):
             new_hyplist = []
@@ -87,7 +88,9 @@ class Sequence2SequenceModel(chainer.Chain):
                 if l > 0:
                     new_lp = lp_vec[eos] + penalty * (len(out)+1)
                     new_st = self.decoder.update(st,eos)
-                    comp_hyplist.append((out, new_lp, new_st))
+                    comp_hyplist.append((out, new_lp))
+                    if best_state is None or best_state[0] < new_lp:
+                        best_state = (new_lp, new_st)
 
                 for o in np.argsort(lp_vec)[::-1]:
                     if o == unk or o == eos:# exclude <unk> and <eos>
@@ -99,7 +102,7 @@ class Sequence2SequenceModel(chainer.Chain):
                             new_hyplist[argmin] = (out+[o], new_lp, new_st)
                             argmin = min(enumerate(new_hyplist), key=lambda h:h[1][1])[0] 
                         else:
-                            continue
+                            break
                     else:
                         new_st = self.decoder.update(st, o)
                         new_hyplist.append((out+[o], new_lp, new_st))
@@ -110,7 +113,7 @@ class Sequence2SequenceModel(chainer.Chain):
 
         if len(comp_hyplist) > 0:
             maxhyps = sorted(comp_hyplist, key=lambda h:-h[1])[:nbest]
-            return maxhyps
+            return maxhyps, best_state[1]
         else:
-            return [([],0.,None)]
+            return [([],0)],None
 
