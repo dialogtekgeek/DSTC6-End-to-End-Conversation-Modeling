@@ -125,7 +125,7 @@ fi
 # scoring
 if [ $stage -le 3 ]; then
     # This script computes BLEU scores for the generated sentences in
-    # ${expdir}/result_m${maxlen}_b${beam}_p${penalty}.txt
+    # '${expdir}/result_m${maxlen}_b${beam}_p${penalty}.txt'
     # the BLEU scores will be written in
     # '${expdir}/bleu_m${maxlen}_b${beam}_p${penalty}.txt'
     echo scoring by BLEU metric
