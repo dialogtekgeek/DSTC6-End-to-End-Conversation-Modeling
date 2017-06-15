@@ -67,6 +67,7 @@ With this demo, you can input text as a user, and a trained model will respond t
 
 Sample models can be downloaded from 
 `https://www.dropbox.com/s/6jfpxfh3aakjvts/sample_twitter_models.tgz` 
+
 So you can obtain the model files as
 ```
 $ cd demo
@@ -74,8 +75,9 @@ $ wget https://www.dropbox.com/s/6jfpxfh3aakjvts/sample_twitter_models.tgz
 $ tar zxvf sample_twitter_models.tgz
 ```
 In the directory `sample_twitter_models`, there are two files, one is for python2 and the other is for python3.
-If you are using python3, `sample_twitter_models/sample_twitter_model_py3.best` is available.
-Then, the demo runs as follows.
+If you are using python3, `sample_twitter_models/sample_twitter_model_py3.best` is available for the demo.
+
+The demo script can be executed as follows.
 ```
 $ demo.sh --model sample_twitter_models/sample_twitter_model_py3.best
 --- do neural conversations ------
