@@ -63,13 +63,23 @@ Models and results will be stored in `egs/opensubs/exp`
 
 ## Interactive demo
 We also prepared an interactive demo `demo.sh` in directory `demo`.
-With this demo, you can input text as a user, and a trained model will respond to you.
-if the trained model is `sample_twitter_model.best`, you can run as
+With this demo, you can input text as a user, and a trained model will respond to you as an agent.
+
+Sample models can be downloaded from 
+`https://www.dropbox.com/s/6jfpxfh3aakjvts/sample_twitter_models.tgz` 
+So you can obtain the model files as
 ```
 $ cd demo
-$ demo.sh --model sample_twitter_model.best
+$ wget https://www.dropbox.com/s/6jfpxfh3aakjvts/sample_twitter_models.tgz
+$ tar zxvf sample_twitter_models.tgz
+```
+In the directory `sample_twitter_models`, there are two files, one is for python2 and the other is for python3.
+If you are using python3, `sample_twitter_models/sample_twitter_model_py3.best` is available.
+Then, the demo runs as follows.
+```
+$ demo.sh --model sample_twitter_models/sample_twitter_model_py3.best
 --- do neural conversations ------
-Loading model params from sample_twitter_model.best
+Loading model params from sample_twitter_models/sample_twitter_model_py3.best
 vocabulary size = 20000
 --- start conversation [push Cntl-D to exit] ------
 U: hello!
