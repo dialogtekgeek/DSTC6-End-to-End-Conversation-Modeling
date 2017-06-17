@@ -63,29 +63,37 @@ Models and results will be stored in `egs/opensubs/exp`
 
 ## Interactive demo
 We also prepared an interactive demo `demo.sh` in directory `demo`.
-With this demo, you can input text as a user, and a trained model will respond to you.
-if the trained model is `sample_twitter_model.best`, you can run as
+With this demo, you can input text as a user, and a trained model will respond to you as an agent.
+
+Sample models can be downloaded from 
+`https://www.dropbox.com/s/6jfpxfh3aakjvts/sample_twitter_models.tgz` 
+
+So you can obtain the model files as
 ```
 $ cd demo
-$ demo.sh --model sample_twitter_model.best
+$ wget https://www.dropbox.com/s/6jfpxfh3aakjvts/sample_twitter_models.tgz
+$ tar zxvf sample_twitter_models.tgz
+```
+In the directory `sample_twitter_models`, there are two files, one is for python2 and the other is for python3.
+If you are using python3, `sample_twitter_models/sample_twitter_model_py3.best` is available for the demo.
+
+The demo script can be executed as follows.
+```
+$ demo.sh --model sample_twitter_models/sample_twitter_model_py3.best
 --- do neural conversations ------
-Loading model params from sample_twitter_model.best
+Loading model params from sample_twitter_models/sample_twitter_model_py3.best
 vocabulary size = 20000
 --- start conversation [push Cntl-D to exit] ------
 U: hello!
-S: hi <USER> , how can we help you today ?
+S: hi <USER> ! how can we help you today ?
 U: i am thinking about buying a new car.
 S: we can help you out with that ! what features are you looking for in your new car ?
-U: cool sports car!
-S: thank you !
-U: can you recommend such cars you have?
-S: yes we do !
-U: what do you have?
+U: i am looking for a minivan.
+S: we 'd be happy to help you find one ! what 's your budget ?
+U: about 30000 dollars. do you have such minivans?
 S: <URL>
-U: okay, i understand ...
-S: we 're sorry to hear that . please dm us your contact info so we can reach out .
-U: okay, have a good day!
-S: you too !
+U: okay, i will check that. thank you.
+S: you 're welcome . have a great day .
 U:
 ```
 
