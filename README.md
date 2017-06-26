@@ -1,4 +1,4 @@
-# DSTC6 Track2: End-to-End Conversation Modeling Track
+# DSTC6: End-to-End Conversation Modeling Track
 
 1. Main task (mandatory): Customer service dialog using Twitter
 
@@ -10,6 +10,17 @@
     Task B: Any open data, e.g. from web, are available as external knowledge to generate informative sentences. But they should not overlap with the training, validation and test data provided by organizers.
 
 2. Pilot task: Movie scenario dialog using OpenSubtitle
+
+Please cite the following paper if you will publish the results using this setup:
+
+https://arxiv.org/pdf/1706.07440.pdf
+
+@article{DSTC6_End-to-End_Conversation_Modeling,
+    Author = {Chiori Hori and Takaaki Hori},
+    Title = {End-to-end Conversation Modeling Track in DSTC6},
+    Journal = {arXiv:1706.07440},
+    Year = {2017}
+}
 
 # Necessary steps
 
