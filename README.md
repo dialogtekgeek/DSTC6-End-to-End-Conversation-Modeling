@@ -11,16 +11,19 @@
 
 2. Pilot task: Movie scenario dialog using OpenSubtitle
 
-Please cite the following paper if you will publish the results using this setup:
 
-https://arxiv.org/pdf/1706.07440.pdf
+* Please cite the following paper if you will publish the results using this setup:
 
-@article{DSTC6_End-to-End_Conversation_Modeling,
+  https://arxiv.org/pdf/1706.07440.pdf
+
+  ```
+  @article{DSTC6_End-to-End_Conversation_Modeling,
     Author = {Chiori Hori and Takaaki Hori},
-    Title = {End-to-end Conversation Modeling Track in DSTC6},
-    Journal = {arXiv:1706.07440},
+    Title = {End-to-end Conversation Modeling Track in DSTC6},    
+    Journal = {arXiv:1706.07440},    
     Year = {2017}
-}
+  }
+  ```
 
 # Necessary steps
 
