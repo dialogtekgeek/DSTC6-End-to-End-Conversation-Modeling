@@ -2,6 +2,11 @@
 
 This package includes training and evaluation scripts for neural conversation models
 based on LSTM-based encoder decoder.
+The system basically follows Vinyals' paper: https://arxiv.org/pdf/1506.05869.pdf
+
+One difference from the paper would be that back-propagation is done only up to the previous sentence from the current sentence, although the state information is taken over throughout the dialog.
+This reduces computation and memory consumption but may be not so good for training long context dependency.
+
 The scripts are written in python code, which were tested on python 2.7.6 and 3.4.3.
 Some bash scripts are also used to run the python scripts.
 
