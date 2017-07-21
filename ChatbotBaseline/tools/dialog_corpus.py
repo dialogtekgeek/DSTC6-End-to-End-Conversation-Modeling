@@ -16,7 +16,7 @@ from collections import Counter
 import copy
 
 def convert_words2ids(words, vocab, unk, sos=None, eos=None):
-    """ convert word string sequence into word Id sequence 
+    """ convert word string sequence into word Id sequence
         Args:
             words (list): word sequence
             vocab (dict): word-id mapping
@@ -35,7 +35,7 @@ def convert_words2ids(words, vocab, unk, sos=None, eos=None):
 
 
 def get_vocabulary(textfile, initial_vocab={'<unk>':0,'<eos>':1}, vocabsize=0):
-    """ acquire vocabulary from dialog text corpus 
+    """ acquire vocabulary from dialog text corpus
         Args:
             textfile (str): filename of a dialog corpus
             initial_vocab (dict): initial word-id mapping
@@ -69,7 +69,7 @@ def load(textfile, vocab, target):
         Args:
             textfile (str): filename of a dialog corpus
             vocab (dict): word-id mapping
-            target (str): target speaker name (e.g. 'S', 'Machine', ...) 
+            target (str): target speaker name (e.g. 'S', 'Machine', ...)
         Return:
             dict of word-id mapping
     """
@@ -134,7 +134,7 @@ def load(textfile, vocab, target):
 
         if len(dialog) > 0:
             data.append(dialog)
-        
+
     return data
 
 
@@ -152,7 +152,7 @@ def make_minibatches(data, batchsize, max_length=0):
     if batchsize > 1:
         # sort dislogs by (#turns, max(reply #words, input #words))
         max_ulens = np.array([ max([(len(u[1]),len(u[0])) for u in d]) for d in data ])
-        indices = sorted(range(len(data)), 
+        indices = sorted(range(len(data)),
                       key=lambda i:(-len(data[i]), -max_ulens[i][0], -max_ulens[i][1]))
         # obtain partions of dialogs for diffrent numbers of turns
         partition = [0]
@@ -169,11 +169,11 @@ def make_minibatches(data, batchsize, max_length=0):
         for p in six.moves.range(len(partition)-1):
             bs = partition[p]
             while bs < partition[p+1]:
-                # batchsize is reduced if max length in the mini batch 
+                # batchsize is reduced if max length in the mini batch
                 # is greater than 'max_length'
                 be = min(bs + batchsize, partition[p+1])
                 if max_length > 0:
-                    max_ulen = np.max(max_ulens[bs:be])
+                    max_ulen = np.max(max_ulens[indices[bs:be]])
                     be = min(be, bs + max(int(batchsize / (max_ulen / max_length + 1)), 1))
 
                 batchlist.append(indices[bs:be])
@@ -182,4 +182,3 @@ def make_minibatches(data, batchsize, max_length=0):
         batchlist = [ np.array([i]) for i in six.moves.range(len(data)) ]
 
     return batchlist
-
