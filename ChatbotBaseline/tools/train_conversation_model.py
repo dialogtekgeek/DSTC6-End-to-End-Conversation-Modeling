@@ -306,9 +306,9 @@ def main():
     while status.epoch <= args.num_epochs:
         logger.info('---------------------training--------------------------')
         if args.optimizer == 'SGD':
-            logger.info('Epoch %d : SGD learning rate = %g' % (status.epoch, optimizer.lr))
+            logger.info('Epoch %d/%d : SGD learning rate = %g' % (status.epoch, args.num_epochs, optimizer.lr))
         else:
-            logger.info('Epoch %d : %s eps = %g' % (status.epoch, args.optimizer, optimizer.eps))
+            logger.info('Epoch %d/%d : %s eps = %g' % (status.epoch, args.num_epochs, args.optimizer, optimizer.eps))
         train_ppl = train_step(model, optimizer, train_set, train_batchset, status, xp)
         logger.info("epoch %d training perplexity: %f" % (status.epoch, train_ppl))
         # write the model params
