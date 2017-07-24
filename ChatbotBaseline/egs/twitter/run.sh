@@ -52,11 +52,11 @@ eval_data=${CHATBOT_DATADIR}/twitter_trial_data_eval.txt
 . utils/parse_options.sh || exit 1;
 
 ## output directory (models and results will be stored in this directory)
-expdir=./exp/${modeltype}_${optimizer}_ee${enc_esize}_eh${enc_hsize}_de${dec_esize}_dh${dec_hsize}_dp${dec_psize}_bs${batch_size}_dr${dropout}
+expdir=./exp/${modeltype}_${optimizer}_el${enc_layer}_ee${enc_esize}_eh${enc_hsize}_dl${dec_layer}_de${dec_esize}_dh${dec_hsize}_dp${dec_psize}_bs${batch_size}_dr${dropout}
 
 ## command settings
 # if 'use_slurm' is true, it throws jobs to the specified queue of slurm
-if [ $use_slurm == true ]; then
+if [ $use_slurm = true ]; then
   train_cmd="srun --job-name train --chdir=$workdir --gres=gpu:1 -p $slurm_queue"
   test_cmd="srun --job-name test --chdir=$workdir --gres=gpu:1 -p $slurm_queue"
   gpu_id=0
@@ -88,7 +88,7 @@ if [ $stage -le 1 ]; then
       --optimizer $optimizer \
       --train $train_data \
       --valid $valid_data \
-      --batch-size ${batch_size} \
+      --batch-size $batch_size \
       --max-batch-length $max_batch_length \
       --vocab-size $vocabsize \
       --model ${expdir}/conversation_model \
