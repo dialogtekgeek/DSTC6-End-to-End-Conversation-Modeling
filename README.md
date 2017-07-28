@@ -1,5 +1,11 @@
 # DSTC6: End-to-End Conversation Modeling Track
 
+# News
+- Download the official training data: Sep 7-18 2017 
+- Test data distribution: Sep 25 2017
+- Submission: Oct 8 2017 
+
+# Track Description
 1. Main task (mandatory): Customer service dialog using Twitter
 
     (*) The tools to download the twitter data and transform to the dialog format from the data are provided. 
