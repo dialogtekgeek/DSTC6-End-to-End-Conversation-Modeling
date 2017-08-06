@@ -5,6 +5,10 @@
 - Test data distribution: Sep 25 2017
 - Submission: Oct 8 2017 
 
+# Registration
+  Please register:
+      https://goo.gl/forms/Fxy061gHuSOZGC1i2
+
 # Track Description
 1. Main task (mandatory): Customer service dialog using Twitter
 
