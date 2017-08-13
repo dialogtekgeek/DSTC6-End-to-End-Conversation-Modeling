@@ -9,7 +9,7 @@
 - Test data distribution: Sep 25 2017
 - Submission: Oct 8 2017 
 
-![New Schedule](https://github.com/dialogtekgeek/DSTC6-End-to-End-Conversation-Modeling/edit/master/Easy3stepDataCollection.jpg "New Schedule")
+![New Schedule](https://github.com/dialogtekgeek/DSTC6-End-to-End-Conversation-Modeling/edit/master/Easy3stepDataCollection.pdf "New Schedule")
 
 
 # Track Description
