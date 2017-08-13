@@ -1,16 +1,16 @@
 # DSTC6: End-to-End Conversation Modeling Track
 
+# Registration
+  Please register:
+      https://goo.gl/forms/Fxy061gHuSOZGC1i2
+      
 # News
 - Download the official training data: Sep 7-18 2017 
 - Test data distribution: Sep 25 2017
 - Submission: Oct 8 2017 
 
+![New Schedule](https://github.com/dialogtekgeek/DSTC6-End-to-End-Conversation-Modeling/edit/master/Easy3stepDataCollection.jpg "New Schedule")
 
-![New Schedule](https://github.com/dialogtekgeek/DSTC6-End-to-End-Conversation-Modeling/edit/master/Easy3stepDataCollection.pdf "New Schedule")
-
-# Registration
-  Please register:
-      https://goo.gl/forms/Fxy061gHuSOZGC1i2
 
 # Track Description
 1. Main task (mandatory): Customer service dialog using Twitter
