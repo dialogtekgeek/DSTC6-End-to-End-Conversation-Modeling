@@ -121,7 +121,7 @@ Otherwise, you can specify the directory to install python modules as
     $ official_collect.sh
     ```
 
-    Each challenge participant should run the script by at least 9/9/2017 GMT 12AM (Midnight)
+    Each challenge participant must run the script by at least 9/8/2017 GMT 24AM (Midnight)
     and do it once a day until 9/18/2017.
     This can be done easily by the following command:
 
