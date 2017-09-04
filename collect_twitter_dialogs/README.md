@@ -115,4 +115,28 @@ Otherwise, you can specify the directory to install python modules as
     Even if the script accidentally stopped, there is no problem.
     Just re-run the script.
 
+3. Use `official_collect.sh` to acquire official data for DSTC6 End-to-End Conversation Modeling track
 
+    ```
+    $ official_collect.sh
+    ```
+
+    Each challenge participant should run the script by at least 9/9/2017 GMT 12AM (Midnight)
+    and do it once a day until 9/18/2017.
+    This can be done easily by the following command:
+
+    ```
+    $ watch -n 86400 official_collect.sh
+    ```
+
+    (The `watch` command will run `official_collect.sh` every 24 hours)
+
+    You will find the collected data in `./official_stored_data`
+
+    ```
+    $ ls official_stored_data
+    1800flowershelp.json   1800flowers.json   1800PetMeds.json   1DFAQ.json
+    1Sale.json ...
+    ```
+
+    A script to extract training, development, and test sets will be provided around 9/18/2017.
