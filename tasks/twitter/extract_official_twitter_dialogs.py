@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""extract_twitter_dialogs.py:
+"""extract_official_twitter_dialogs.py:
    A script to extract text from twitter dialogs.
 
    Copyright (c) 2017 Takaaki Hori  (thori@merl.com)
@@ -142,15 +142,15 @@ def print_dialog(dialog, fo, sys_name='', debug=False):
             screen_name = tweet['user']['screen_name']
             name = tweet['user']['name']
             text = tweet['text']
-            if debug:
-                six.print_('### %s: %s' % (name,text), file=fo)
 
             if screen_name.lower() == sys_name.lower():
                 speaker = 'S'
-                text = preprocess(text, user_name, speaker=speaker, first_name=user_first_name)
+                if not debug:
+                    text = preprocess(text, user_name, speaker=speaker, first_name=user_first_name)
             else:
                 speaker = 'U'
-                text = preprocess(text, system_name, speaker=speaker)
+                if not debug:
+                    text = preprocess(text, system_name, speaker=speaker)
                 # set user's screen name and first name to replace the names
                 # to a common symbol (e.g. <USER>) in system utterances
                 user_name = screen_name
@@ -174,6 +174,29 @@ def print_dialog(dialog, fo, sys_name='', debug=False):
     six.print_('\n', file=fo)
 
 
+def limit_dialogs(dialog_set, id_info):
+    """
+    limit dialog extraction by IDs
+    """
+    new_dialog_set = {}
+    for did in dialog_set:
+        dialog = dialog_set[did]
+        new_dialog = []
+        end = None
+        for n in six.moves.range(len(dialog)-1,-1,-1):
+            id_str = dialog[n]["id_str"]
+            if end is None and id_str in id_info:
+                end = id_info[id_str]
+            if end is not None:
+                new_dialog.insert(0,dialog[n])
+                if dialog[n]['id'] == end:
+                    break
+        if len(new_dialog) > 0:
+            new_id = new_dialog[-1]['id_str']
+            new_dialog_set[new_id] = new_dialog
+    return new_dialog_set
+
+
 if __name__ == "__main__":
     # parse command line
     parser = argparse.ArgumentParser()
@@ -183,6 +206,7 @@ if __name__ == "__main__":
     parser.add_argument('--data-dir', help='specify data directory')
     parser.add_argument('--max-turns', default=20, 
                         help='exclude long dialogs by this number')
+    parser.add_argument('--id-file', default='', help='use begin-end ID file')
     parser.add_argument('--no-progress-bar', action='store_true', 
                         help='show progress bar')
     parser.add_argument('files', metavar='FN', nargs='*',
@@ -203,6 +227,11 @@ if __name__ == "__main__":
         fo = open(args.output,'w')
     else:
         fo = sys.stdout
+    # use id range file
+    if args.id_file:
+        id_info = json.load(open(args.id_file,'r'))
+    else:
+        id_info = None
 
     # extract dialogs
     # (1) merge separated tweets that can be considered one utterance
@@ -218,6 +247,9 @@ if __name__ == "__main__":
             system_name = m.group(2)
         else:
             raise Exception('no match to a screen name in %s' % fn)
+
+        if id_info is not None:
+            dialog_set = limit_dialogs(dialog_set, id_info[system_name])
 
         # make a tweet tree to merge sequential tweets by the same user
         root = {}
