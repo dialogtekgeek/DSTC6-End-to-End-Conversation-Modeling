@@ -205,7 +205,7 @@ if __name__ == "__main__":
         fo = sys.stdout
 
     # extract dialogs
-    # (1) merge sparated tweets that can be considered one utterance
+    # (1) merge separated tweets that can be considered one utterance
     # (2) filter irregular dialogs, e.g. too long, including truncated tweets, etc.
     # (3) tokenize and normalize sentence text
     if not args.no_progress_bar:

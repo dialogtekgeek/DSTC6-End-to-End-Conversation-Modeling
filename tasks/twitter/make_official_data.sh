@@ -5,7 +5,7 @@ stored_data=../../collect_twitter_dialogs/official_stored_data
 
 # you need to download tweet ID info to specify the data sets
 idfile=official_begin_end_ids.json
-idlink=https://www.dropbox.com/s/g5mp3eyieqf7i98/official_begin_end_ids.json.gz
+idlink=https://www.dropbox.com/s/8lmpu5dfw2hmpys/official_begin_end_ids.json.gz
 echo downloading begin/end IDs for extracting data
 wget $idlink
 gunzip -f ${idfile}.gz
