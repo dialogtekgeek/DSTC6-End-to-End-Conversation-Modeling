@@ -131,38 +131,42 @@ if __name__ == "__main__":
         system_name = ''
         # print a dialog 
         missed = False
-        for turn in dialog:
+        for ti,turn in enumerate(dialog):
             speaker = turn['speaker']
             six.print_('%s:' % speaker, file=fo, end='')
             if sum([tid in tweet_pool for tid in turn['ids']]) < len(turn['ids']):
                 six.print_(' __MISSING__', file=fo)
                 missed = True
-                continue
 
-            for tid in turn['ids']:
-                tweet = tweet_pool[tid]
-                screen_name = tweet['user']['screen_name']
-                name = tweet['user']['name']
-                text = tweet['text']
-                if speaker == 'S':
-                    if not args.debug:
-                        text = preprocess(text, user_name, speaker=speaker, first_name=user_first_name)
-                    system_name = screen_name
-                else:
-                    if not args.debug:
-                        text = preprocess(text, system_name, speaker=speaker)
-                    # set user's screen name and first name to replace the names
-                    # to a common symbol (e.g. <USER>) in system utterances
-                    user_name = screen_name
-                    tokens = name.split()
-                    if len(tokens) > 0 and len(tokens[0]) > 2:
-                        m = re.match(r'([A-Za-z0-9]+)$', tokens[0])
-                        if m:
-                            user_first_name = m.group(1)
+            elif len(turn['ids'])==0 and ti==len(dialog)-1:
+                six.print_(' __UNDISCLOSED__', file=fo)
+                n_turns += 1
 
-                six.print_(' %s' % text, file=fo, end='')
-            six.print_('', file=fo)
-            n_turns += 1
+            else:
+                for tid in turn['ids']:
+                    tweet = tweet_pool[tid]
+                    screen_name = tweet['user']['screen_name']
+                    name = tweet['user']['name']
+                    text = tweet['text']
+                    if speaker == 'S':
+                        if not args.debug:
+                            text = preprocess(text, user_name, speaker=speaker, first_name=user_first_name)
+                        system_name = screen_name
+                    else:
+                        if not args.debug:
+                            text = preprocess(text, system_name, speaker=speaker)
+                        # set user's screen name and first name to replace the names
+                        # to a common symbol (e.g. <USER>) in system utterances
+                        user_name = screen_name
+                        tokens = name.split()
+                        if len(tokens) > 0 and len(tokens[0]) > 2:
+                            m = re.match(r'([A-Za-z0-9]+)$', tokens[0])
+                            if m:
+                                user_first_name = m.group(1)
+
+                    six.print_(' %s' % text, file=fo, end='')
+                six.print_('', file=fo)
+                n_turns += 1
 
         n_turns_in_list += len(dialog)
         if not missed:
