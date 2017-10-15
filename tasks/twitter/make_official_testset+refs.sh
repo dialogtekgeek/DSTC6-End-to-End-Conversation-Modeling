@@ -4,7 +4,7 @@
 stored_data=../../collect_twitter_dialogs/official_stored_data
 
 # tweet ID list of the test set
-# (reference text is not provided, i.e., last turn of each dialog is empty)
+# (reference text is included since the challenge period already finished)
 idlist=official_testset_ids+refs.json
 gunzip -c ${idlist}.gz > $idlist
 
